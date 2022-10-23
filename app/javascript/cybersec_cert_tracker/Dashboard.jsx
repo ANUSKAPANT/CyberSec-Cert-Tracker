@@ -101,15 +101,6 @@ function Dashboard({ userData }) {
   return (
     <>
       <ToastContainer />
-      {/* <Label for="exampleCustomFileBrowser">Upload CSV</Label>
-      <Input
-        type="file"
-        id="exampleCustomFileBrowser"
-        name="customFile"
-        accept=".csv"
-        multiple
-        onChange={fileUpload}
-      /> */}
       <Button
         color="success"
         className="csv-button"
