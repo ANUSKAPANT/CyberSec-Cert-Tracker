@@ -8,33 +8,21 @@ class CoursesController < ApplicationController
   def create
     @course = Course.new(course_params)
     if @course.save
-      respond_to do |format|
-        format.json  { render json: @course, status: :created }
-      end
+      render json: @course, status: :created
     else
-      respond_to do |format|
-        format.json { render json: @course.errors, status: :unprocessable_entity }
-      end
+      render json: @course.errors, status: :unprocessable_entity
     end
   end
 
   def show
-    if @course.present?
-      render json: CourseSerializer.new(@course).serialized_json, status: :ok
-    else
-      render status: :unprocessable_entity
-    end
+    render json: CourseSerializer.new(@course).serialized_json, status: :ok
   end
 
   def update
     if @course.update(course_params)
-      respond_to do |format|
-        format.json  { render json: @course, status: :created }
-      end
+      render json: @course, status: :created
     else
-      respond_to do |format|
-        format.json { render json: @course.errors, status: :unprocessable_entity }
-      end
+      render json: @course.errors, status: :unprocessable_entity
     end
   end
 
@@ -48,8 +36,8 @@ class CoursesController < ApplicationController
 
   private
 
-  def course_params(params)
-    params = params.permit(:name, :vendor_id)
+  def course_params
+    params.permit(:name, :vendor_id)
   end
 end
   

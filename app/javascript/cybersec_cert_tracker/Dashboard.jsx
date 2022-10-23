@@ -1,41 +1,14 @@
-import React, { useEffect, useState, CSSProperties } from "react";
+import React, { useEffect, useState } from "react";
 import "./table.css";
 import DashboardTable from "./DashboardTable";
 import makeData from "./makeData";
-import { Label, Input, Button } from "reactstrap";
-import Modal from "@mui/material/Modal";
-import Box from "@mui/material/Box";
-import { FileUploader } from "react-drag-drop-files";
+import { Label, Input } from "reactstrap";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import ClipLoader from "react-spinners/ClipLoader";
-import "./Dashboard.css";
-
-const override = {
-  display: "block",
-  margin: "0 auto",
-  borderColor: "red",
-};
-
-const style = {
-  position: "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  width: 400,
-  bgcolor: "background.paper",
-  border: "2px solid #000",
-  boxShadow: 24,
-  p: 4,
-};
-
-const fileTypes = ["csv"];
 
 function Dashboard({ userData }) {
-  const [loading, setLoading] = useState(true);
   const [tableData, setTableData] = useState([]);
-  const [open, setOpen] = React.useState(false);
 
   useEffect(() => {
     axios
@@ -45,7 +18,6 @@ function Dashboard({ userData }) {
       .then((res) => {
         const { records } = res.data;
         console.log(records);
-        setLoading(false);
         setTableData(records);
       })
       .catch((error) => {
@@ -66,7 +38,8 @@ function Dashboard({ userData }) {
     }
 
     const formData = new FormData();
-    Object.entries(event).forEach(([key, file]) => {
+
+    Object.entries(event.target.files).forEach(([key, file]) => {
       formData.append("file_name", file.name);
       formData.append("body", file);
       formData.append("user_id", 1);

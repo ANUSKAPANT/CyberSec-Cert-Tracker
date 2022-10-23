@@ -8,33 +8,21 @@ class CompaniesController < ApplicationController
   def create
     @company = Company.new(company_params)
     if @company.save
-      respond_to do |format|
-        format.json  { render json: @company, status: :created }
-      end
+      render json: @company, status: :created
     else
-      respond_to do |format|
-        format.json { render json: @company.errors, status: :unprocessable_entity }
-      end
+      render json: @company.errors, status: :unprocessable_entity
     end
   end
 
   def show
-    if @company.present?
-      render json: CompanySerializer.new(@company).serialized_json, status: :ok
-    else
-      render status: :unprocessable_entity
-    end
+    render json: CompanySerializer.new(@company).serialized_json, status: :ok
   end
 
   def update
     if @company.update(company_params)
-      respond_to do |format|
-        format.json  { render json: @company, status: :created }
-      end
+      render json: @company, status: :created
     else
-      respond_to do |format|
-        format.json { render json: @company.errors, status: :unprocessable_entity }
-      end
+      render json: @company.errors, status: :unprocessable_entity
     end
   end
 
@@ -49,6 +37,6 @@ class CompaniesController < ApplicationController
   private
 
   def company_params
-    params = params.require(:company).permit(:name, :smc)
+    params.permit(:name, :smc)
   end
 end

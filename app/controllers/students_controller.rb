@@ -8,33 +8,21 @@ class StudentsController < ApplicationController
   def create
     @student = Student.new(student_params)
     if @student.save
-      respond_to do |format|
-        format.json  { render json: @student, status: :created }
-      end
+      render json: @student, status: :created
     else
-      respond_to do |format|
-        format.json { render json: @student.errors, status: :unprocessable_entity }
-      end
+      render json: @student.errors, status: :unprocessable_entity
     end
   end
 
   def show
-    if @student.present?
-      render json: StudentSerializer.new(@student).serialized_json, status: :ok
-    else
-      render status: :unprocessable_entity
-    end
+    render json: StudentSerializer.new(@student).serialized_json, status: :ok
   end
 
   def update
     if @student.update(student_params)
-      respond_to do |format|
-        format.json  { render json: @student, status: :created }
-      end
+      render json: @student, status: :created
     else
-      respond_to do |format|
-        format.json { render json: @student.errors, status: :unprocessable_entity }
-      end
+      render json: @student.errors, status: :unprocessable_entity
     end
   end
 
@@ -49,6 +37,6 @@ class StudentsController < ApplicationController
   private
 
   def student_params
-    params = params.require(:student).permit(:first_name, :last_name, :canvas_id, :title, :company_id, :email_id)
+    params.permit(:first_name, :last_name, :canvas_id, :title, :company_id, :email_id)
   end
 end

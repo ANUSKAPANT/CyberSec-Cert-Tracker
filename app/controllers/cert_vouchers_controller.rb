@@ -8,33 +8,21 @@ class CertVouchersController < ApplicationController
   def create
     @cert_voucher = CertVoucher.new(cert_voucher_params)
     if @cert_voucher.save
-      respond_to do |format|
-        format.json  { render json: @cert_voucher, status: :created }
-      end
+      render json: @cert_voucher, status: :created
     else
-      respond_to do |format|
-        format.json { render json: @cert_voucher.errors, status: :unprocessable_entity }
-      end
+      render json: @cert_voucher.errors, status: :unprocessable_entity
     end
   end
 
   def show
-    if @cert_voucher.present?
-      render json: CertVoucherSerializer.new(@cert_voucher).serialized_json, status: :ok
-    else
-      render status: :unprocessable_entity
-    end
+    render json: CertVoucherSerializer.new(@cert_voucher).serialized_json, status: :ok
   end
 
   def update
     if @cert_voucher.update(cert_voucher_params)
-      respond_to do |format|
-        format.json  { render json: @cert_voucher, status: :created }
-      end
+      render json: @cert_voucher, status: :created
     else
-      respond_to do |format|
-        format.json { render json: @cert_voucher.errors, status: :unprocessable_entity }
-      end
+      render json: @cert_voucher.errors, status: :unprocessable_entity
     end
   end
 
@@ -49,6 +37,6 @@ class CertVouchersController < ApplicationController
   private
 
   def cert_voucher_params
-    params = params.permit(:student_course_id, :certification_name, :created_date, :expiry_date)
+    params.permit(:student_course_id, :certification_name, :created_date, :expiry_date)
   end
 end

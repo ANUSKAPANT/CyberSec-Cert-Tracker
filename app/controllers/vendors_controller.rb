@@ -8,33 +8,21 @@ class VendorsController < ApplicationController
   def create
     @vendor = Vendor.new(vendor_params)
     if @vendor.save
-      respond_to do |format|
-        format.json  { render json: @vendor, status: :created }
-      end
+      render json: @vendor, status: :created
     else
-      respond_to do |format|
-        format.json { render json: @vendor.errors, status: :unprocessable_entity }
-      end
+      render json: @vendor.errors, status: :unprocessable_entity
     end
   end
 
   def show
-    if @vendor.present?
-      render json: VendorSerializer.new(@vendor).serialized_json, status: :ok
-    else
-      render status: :unprocessable_entity
-    end
+    render json: VendorSerializer.new(@vendor).serialized_json, status: :ok
   end
 
   def update
     if @vendor.update(vendor_params)
-      respond_to do |format|
-        format.json  { render json: @vendor, status: :created }
-      end
+      render json: @vendor, status: :created
     else
-      respond_to do |format|
-        format.json { render json: @vendor.errors, status: :unprocessable_entity }
-      end
+      render json: @vendor.errors, status: :unprocessable_entity
     end
   end
 
@@ -42,13 +30,13 @@ class VendorsController < ApplicationController
     @vendor.destroy
   end
 
+  private
+
   def set_vendor
     @vendor = Vendor.find(params[:id])
   end
 
-  private
-
-  def vendor_params(params)
-    params = params.require(:vendor).permit(:name)
+  def vendor_params
+    params.permit(:name)
   end
 end
