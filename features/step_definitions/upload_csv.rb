@@ -6,23 +6,27 @@ Given("user is on dashboard page") do
 end
 
 When("user uploads a empty csv") do
-    attach_file('csvFile', 'features/test_data/empty.csv')
+    page.find("#uploadCSVButton").click
+    attach_file("csvFile", 'features/test_data/canvas.csv', make_visible: true)
 end
 
 When("user uploads a canvas csv") do
-    attach_file('csvFile', 'features/test_data/canvas.csv')
+    page.find("#uploadCSVButton").click
+    attach_file("csvFile", 'features/test_data/canvas.csv', make_visible: true)
     sleep(1) #wait for data upload to finish in backend
     expect(page).to have_content("Success")
 end
 
 When("user uploads a tees csv") do
-    attach_file('csvFile', 'features/test_data/tees.csv')
+    page.find("#uploadCSVButton").click
+    attach_file("csvFile", 'features/test_data/canvas.csv', make_visible: true)
     sleep(1) #wait for data upload to finish in backend
     expect(page).to have_content("Success")
 end
 
 When("user uploads a corrupt csv") do
-    attach_file('csvFile', 'features/test_data/corrupt.csv')
+    page.find("#uploadCSVButton").click
+    attach_file("csvFile", 'features/test_data/canvas.csv', make_visible: true)
 end
 
 When("user refreshes the page") do
